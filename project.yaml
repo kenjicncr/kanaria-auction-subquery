@@ -34,6 +34,6 @@ dataSources:
           filter:
             function: buy(string,string)
         - handler: handleItemBought
-          kind: substrate/Moonbeamevent
+          kind: substrate/MoonbeamEvent
           filter:
             event: ItemBought(address,uint256,uint256)
