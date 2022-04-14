@@ -1,0 +1,39 @@
+specVersion: "0.2.0"
+
+name: "Blockplace"
+version: "1.0.0"
+description: "Blockplace Transactions"
+repository: "https://github.com/kenjicncr/movrplace-subquery"
+
+schema:
+  file: "./schema.graphql"
+
+network:
+  genesisHash: '0x401a1f9dca3da46f5c4091016c8a2f26dcea05865116b286f60f668207d1474b' # Genesis hash of Moonriver
+  endpoint: wss://moonriver.api.onfinality.io/public-ws
+
+  chaintypes:
+    file: "./types.yaml"
+
+dataSources:
+  - kind: substrate/Moonbeam
+    startBlock: 1700100
+    processor:
+      file: './node_modules/@subql/contract-processors/dist/moonbeam.js'
+      options:
+        abi: contract
+        address: '0x6DcFF9fD60bC12EdeAD4141001f0C8693Cf5885A'
+    assets:
+      contract:
+        file: './dutchAuctionAbi.json'
+    mapping:
+      file: './dist/index.js'
+      handlers:
+        - handler: handleStorePixels
+          kind: substrate/MoonbeamCall
+          filter:
+            function: buy(string,string)
+        - handler: handleItemBought
+          kind: substrate/Moonbeamevent
+          filter:
+            event: ItemBought(address,uint256,uint256)

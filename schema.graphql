@@ -1,0 +1,15 @@
+type BoughtSlot @entity {
+  id: ID!
+
+  purchaser: Bytes
+
+  price: BigInt
+  
+  slotId: String
+
+  itemId: String
+
+  note: String
+
+  timeBought: BigInt
+}
